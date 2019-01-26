@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom'
+import * as actions from '../../actions/authActions';
 
  class Register extends Component {
  constructor(){
@@ -13,6 +15,13 @@ import {connect} from 'react-redux';
         errors:{}
      }
      }
+     componentWillReceiveProps(nextProps){
+         if(nextProps.errors){
+             this.setState({
+                 errors:nextProps.errors
+             })
+         }
+     }
      onChange=(e)=>{
          this.setState({[e.target.name]:e.target.value})
      }
@@ -24,10 +33,10 @@ import {connect} from 'react-redux';
              password:this.state.password,
              password2:this.state.password2
          }
-         console.log(newUser)
+        this.props.registerUser(newUser,this.props.history);
      }
   render(){
-    const {errors}=this.state
+    const {errors}=this.state;
     return (
       <div>
         <div className="register">
@@ -97,4 +106,13 @@ import {connect} from 'react-redux';
     )
   }
 }
-export default Register
+// Register.PropTypes={
+//     registerUser:PropTypes.func.isRequired,
+//     auth:PropTypes.object.isRequired,
+//     errors:PropTypes.object.isRequired
+// }
+const mapStateToProps=(state)=>({
+    auth: state.auth,
+    error: state.errors
+})
+export default connect(mapStateToProps,actions)(withRouter(Register));
