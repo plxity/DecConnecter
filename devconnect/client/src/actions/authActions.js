@@ -1,6 +1,7 @@
-import {GET_ERRORS} from './types';
+import {GET_ERRORS, SET_CURRENT_USER} from './types';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import setAuthToken from '../utils/setAuthToken';
 export const registerUser =(UserData,history)=> dispatch =>{
     axios
         .post('/api/users/register',UserData)
@@ -13,26 +14,27 @@ export const registerUser =(UserData,history)=> dispatch =>{
   
 }
 
-export const loginUser =(UserData)=> dispatch =>{
-    axios
-        .post('/api/users/login',UserData)
-        .then(res=>{
-            const {token} = res.data;
-            localStorage.setItem('jwtToken',token);
-            setAuthToken(token);
-            const decoded = jwt_decode(token);
-            dispatch(setCurrentUser(decoded));
+export const loginUser= (UserData)=> dispatch=>{
+    axios.post('/api/users/login')
+    .then((res)=>{
+        const token = res.data.token;
+        localStorage.setItem('jwtToken',token);
+        setAuthToken(token);
+        const decoded = jwt_decode(toker);
+        dispatch(setCurrentUser(decoded))
+    })
+    .catch(err=>{
+        dispatch({
+            type:GET_ERRORS,
+            payload:err.response.data
         })
-        .catch(err=>
-            dispatch({
-                type:GET_ERRORS,
-                payload:err.response.data
-            }))
-}
 
-export const setCurrentUser =(token)=>{
+    })
+}
+export const setCurrentUser=(decoded)=>{
     return{
-        type: SET_CURRENT_USER,
+        types: SET_CURRENT_USER,
         payload:decoded
     }
 }
+
