@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
+import PorpTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {logoutUser, loginUser} from '../../actions/authActions';
 
-export default class Navbar extends Component {
+class Navbar extends Component {
   render() {
+    const {isAuthenticated,user} =this.props.auth;
     return (
       <div>
             <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
@@ -35,4 +39,12 @@ export default class Navbar extends Component {
     )
   }
 }
+Navbar.PorpTypes={
+  logoutUser: PorpTypes.func.isRequired,
+  auth:PorpTypes.object.isRequired
+}
+const mapStateToProps=(state)=>({
+  auth:state.auth
+})
+export default connect(mapStateToProps, {logoutUser})(Navbar);
 
