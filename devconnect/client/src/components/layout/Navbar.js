@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
+import {clearCurrentPorfile} from '../../actions/profilesAction';
+import store from '../../store';
 
 class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
+    store.dispatch(clearCurrentPorfile());
     this.props.logoutUser();
   }
 
