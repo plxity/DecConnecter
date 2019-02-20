@@ -41,16 +41,20 @@ export const createProfile = (profileData, history) => dispatch => {
 };
 //Delete Porfile
 export const deleteAccount = () => dispatch => {
-  axios.delete('/api/profile')
-  .then(res=>
-    dispatch({
-      type:SET_CURRENT_USER,
-      payload:{}
-    }))
-    .catch(err=>dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    }))
+  if(window.confirm('Are you sure you want to delete your account?')){
+    axios.delete('/api/profile')
+    .then(res=>
+      dispatch({
+        type:SET_CURRENT_USER,
+        payload:{}
+      }))
+      .catch(err=>dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      }))
+
+  }
+
 }
 // Profile loading
 export const setProfileLoading = () => {
