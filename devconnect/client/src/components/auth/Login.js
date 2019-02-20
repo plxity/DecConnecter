@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
+
 class Login extends Component {
   constructor() {
     super();
@@ -23,9 +24,9 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.auth.isAuthenticated) {
-    //   this.props.history.push('/dashboard');
-    // }
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
 
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
@@ -40,9 +41,7 @@ class Login extends Component {
       password: this.state.password
     };
 
-    this.props.loginUser(userData,()=>{
-      this.props.history.push('/dashboard')
-    });
+    this.props.loginUser(userData);
   }
 
   onChange(e) {
@@ -63,17 +62,18 @@ class Login extends Component {
               </p>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
-                  type="email"
-                  placeholder="Email address"
+                  placeholder="Email Address"
                   name="email"
+                  type="email"
                   value={this.state.email}
                   onChange={this.onChange}
                   error={errors.email}
                 />
+
                 <TextFieldGroup
-                  type="password"
                   placeholder="Password"
                   name="password"
+                  type="password"
                   value={this.state.password}
                   onChange={this.onChange}
                   error={errors.password}
