@@ -1,0 +1,4 @@
+{
+    "mongoURI" :"mongodb+srv://plxity:plxity@knowyourmates-eq6ek.mongodb.net/test?retryWrites=true",
+    "jwtSecret": "asecretkey"
+}
