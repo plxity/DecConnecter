@@ -8,12 +8,14 @@ import './App.css';
 import {Provider} from 'react-redux';
 import store from './store';
 
+
 const App = () => {
   return (
     <Provider store={store}>
     <Router>
       <Fragment>
       <Navbar/>
+
       <Route exact path='/' component ={Landing} />
       <section className="container">
         <Switch>

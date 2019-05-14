@@ -1,6 +1,8 @@
 import React,{Fragment, useState} from 'react'
-
-const Register = () => {
+import {connect} from 'react-redux';
+import {setAlert} from '../../Actions/alert';
+import Alert from '../layout/alert';
+const Register = ({setAlert}) => {
     const [formData, setFormData] = useState({
         name:'',
         email:'',
@@ -12,7 +14,7 @@ const Register = () => {
     const onSubmit = e => {
         e.preventDefault()
         if(password !== password2)
-        console.log('Password dont match');
+        setAlert("Password doesn't match","danger")
         else{
             console.log(formData);
         }
@@ -20,6 +22,7 @@ const Register = () => {
 
   return (
     <Fragment>
+      <Alert/>
        <h1 className="large text-primary">Sign Up</h1>
       <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
       <form className="form" onSubmit={e=>onSubmit(e)}>
@@ -27,7 +30,7 @@ const Register = () => {
           <input type="text" placeholder="Name" name="name" required value={name} onChange={e=>onchange(e)} />
         </div>
         <div className="form-group">
-          <input type="email" placeholder="Email Address" name="email" value={email} onChange={e=>onchange(e)} />
+          <input type="email" placeholder="Email Address" required name="email" value={email} onChange={e=>onchange(e)} />
           <small className="form-text"
             >This site uses Gravatar so if you want a profile image, use a
             Gravatar email</small
@@ -61,5 +64,4 @@ const Register = () => {
     </Fragment>
   )
 }
-
-export default Register
+export default connect(null,{setAlert})(Register);
