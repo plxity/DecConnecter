@@ -2,7 +2,9 @@ import React,{Fragment, useState} from 'react'
 import {connect} from 'react-redux';
 import {setAlert} from '../../Actions/alert';
 import Alert from '../layout/alert';
-const Register = ({setAlert}) => {
+import {registerUser} from '../../Actions/Auth';
+
+const Register = ({setAlert,registerUser}) => {
     const [formData, setFormData] = useState({
         name:'',
         email:'',
@@ -14,9 +16,9 @@ const Register = ({setAlert}) => {
     const onSubmit = e => {
         e.preventDefault()
         if(password !== password2)
-        setAlert("Password doesn't match","danger")
+        setAlert("Password doesn't match",'danger')
         else{
-            console.log(formData);
+            registerUser({name,email,password})
         }
     }
 
@@ -27,10 +29,10 @@ const Register = ({setAlert}) => {
       <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
       <form className="form" onSubmit={e=>onSubmit(e)}>
         <div className="form-group">
-          <input type="text" placeholder="Name" name="name" required value={name} onChange={e=>onchange(e)} />
+          <input type="text" placeholder="Name" name="name"  value={name} onChange={e=>onchange(e)} />
         </div>
         <div className="form-group">
-          <input type="email" placeholder="Email Address" required name="email" value={email} onChange={e=>onchange(e)} />
+          <input type="email" placeholder="Email Address"  name="email" value={email} onChange={e=>onchange(e)} />
           <small className="form-text"
             >This site uses Gravatar so if you want a profile image, use a
             Gravatar email</small
@@ -41,7 +43,7 @@ const Register = ({setAlert}) => {
             type="password"
             placeholder="Password"
             name="password"
-            minLength="6"
+           
             onChange={e=>onchange(e)}
             value={password}
           />
@@ -50,8 +52,9 @@ const Register = ({setAlert}) => {
           <input
             type="password"
             placeholder="Confirm Password"
+            
             name="password2"
-            minLength="6"
+            
             onChange={e=>onchange(e)}
             value={password2}
           />
@@ -64,4 +67,4 @@ const Register = ({setAlert}) => {
     </Fragment>
   )
 }
-export default connect(null,{setAlert})(Register);
+export default connect(null,{setAlert,registerUser})(Register);
