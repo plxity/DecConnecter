@@ -2,7 +2,7 @@ import {REGISTER_SUCCESS,REGISTER_FAIL} from './types';
 import {setAlert} from './alert';
 import axios from 'axios';
 
-export const registerUser =({name, email, password}) => async dispatch => {
+export const registerUser =({name, email, password}) =>  async dispatch => {
      const config ={
          headers:{
              'Content-Type':'application/json'
@@ -10,7 +10,7 @@ export const registerUser =({name, email, password}) => async dispatch => {
      }
      const body = JSON.stringify({name, email,password});
      try{
-        const res =  await axios.post('/api/users/', body,config);
+        const res = await axios.post('/api/users/',body);
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
