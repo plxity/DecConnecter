@@ -1,6 +1,10 @@
 import React,{Fragment, useState} from 'react'
+import {connect} from 'react-redux';
+import {loginUser} from '../../Actions/Auth';
+import {Redirect} from 'react-router-dom';
+import Alert from '../../components/layout/alert';
 
-const Register = () => {
+const Login= ({loginUser, isAuthenticated}) => {
     const [formData, setFormData] = useState({
         email:'',
         password:'',
@@ -9,11 +13,15 @@ const Register = () => {
     const onchange = e => setFormData({...formData, [e.target.name]:e.target.value})
     const onSubmit = e => {
         e.preventDefault()
-        console.log(formData);
+        loginUser({email,password});
        }
 
+    if(isAuthenticated){
+      return <Redirect to='/Dashboard' />
+    }
   return (
     <Fragment>
+      <Alert />
        <h1 className="large text-primary">Sign In</h1>
       <p className="lead"><i className="fas fa-user"></i> Sign In to your acoount</p>
       <form className="form" onSubmit={e=>onSubmit(e)}>
@@ -35,5 +43,8 @@ const Register = () => {
     </Fragment>
   )
 }
+const mapStateToProps = (state) => ({
+  isAuthenticated : state.auth.isAuthenticated
+})
 
-export default Register
+export default connect(mapStateToProps,{loginUser})(Login)

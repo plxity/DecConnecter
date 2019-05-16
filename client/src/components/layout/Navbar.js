@@ -1,7 +1,11 @@
-import React from 'react'
+import React from 'react';
+import {connect} from 'react-redux';
+import {logout} from '../../Actions/Auth';
+const Navbar = ({logout,isAuthenticated}) => {
 
-const Navbar = () => {
   return (
+
+    
     <nav className="navbar bg-dark">
       <h1>
         <a href="index.html"><i className="fas fa-code"></i> DevConnector</a>
@@ -14,5 +18,8 @@ const Navbar = () => {
     </nav>
   )
 }
+const mapStateToProps =(state) =>({
+  isAuthenticated : state.auth.isAuthenticated
+})
 
-export default Navbar
+export default connect(mapStateToProps,{logout})(Navbar);
